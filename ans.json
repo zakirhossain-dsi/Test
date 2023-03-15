@@ -1,0 +1,46 @@
+{
+  "_id": "WIM64ZLOBUUWQWFX6G2BHEMJOE",
+  "additional_properties": {
+    "fullSizeResizeUrl": "/resizer/kreP_A1jLYx0sVh7McWMWLU2_Lw=/arc-photo-mentormedier/eu-central-1-sandbox/WIM64ZLOBUUWQWFX6G2BHEMJOE.jpg",
+    "galleries": [],
+    "mime_type": "image/jpeg",
+    "originalName": "dagen305379_sy6.jpg",
+    "proxyUrl": "/resizer/kreP_A1jLYx0sVh7McWMWLU2_Lw=/arc-photo-mentormedier/eu-central-1-sandbox/WIM64ZLOBUUWQWFX6G2BHEMJOE.jpg",
+    "published": false,
+    "resizeUrl": "/resizer/kreP_A1jLYx0sVh7McWMWLU2_Lw=/arc-photo-mentormedier/eu-central-1-sandbox/WIM64ZLOBUUWQWFX6G2BHEMJOE.jpg",
+    "restricted": false,
+    "thumbnailResizeUrl": "/resizer/bNKoKi9UKamozUtrjCO6W3EQLzQ=/300x0/arc-photo-mentormedier/eu-central-1-sandbox/WIM64ZLOBUUWQWFX6G2BHEMJOE.jpg",
+
+    "originalUrl": "https://cloudfront-eu-central-1.images.arcpublishing.com/sandbox.mentormedier/WIM64ZLOBUUWQWFX6G2BHEMJOE.jpg",
+    "usage_instructions": "Migrated from Fixlove Dagen. Do not use unless usage rights have been clarified for this specific image",
+    "version": 1
+  },
+  "address": {},
+  "alt_text": "",
+  "caption": "<p>Foto: Scanpix</p>\n",
+  "copyright": "",
+  "created_date": "2021-08-14T06:35:40Z",
+  "credits": {},
+  "distributor": {
+    "mode": "reference",
+    "reference_id": "a2c29f44-70f9-4478-9560-5758165e2ede"
+  },
+  "height": 547,
+  "image_type": "photograph",
+  "licensable": false,
+  "slug": "foto-scanpix-2",
+  "source": {
+    "name": "fixlove",
+    "source_id": "768",
+    "source_type": "migrated",
+    "system": "Fixlove stage"
+  },
+  "subtitle": "Foto: Scanpix",
+  "type": "image",
+  "version": "0.10.4",
+  "width": 1600,
+  "display_date": "2012-04-17T00:00:00.0Z",
+  "description": {},
+  "language": "nb-NO",
+  "publish_date": "2012-04-17T00:00:00.0Z"
+}

@@ -1,0 +1,95 @@
+{
+  "_index": "metricbeat-7.9.1-2020.09.16-000013",
+  "_type": "_doc",
+  "_id": "RUQum3QBwzwaF-R83QRW",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "@timestamp": "2020-09-17T08:29:31.338Z",
+    "agent": {
+      "type": "metricbeat",
+      "version": "7.9.1",
+      "hostname": "jenkins-x-metricbeat-6m6ms",
+      "ephemeral_id": "0e335453-39eb-4016-8135-ca4c075e2c03",
+      "id": "4ce1df78-129d-425a-a89a-581dced4c51d",
+      "name": "jenkins-x-metricbeat-6m6ms"
+    },
+    "prometheus": {
+      "labels": {
+        "content_type": "image",
+        "priority": "regular",
+        "publisher": "vl.no",
+        "source_name": "reportasje",
+        "instance": "192.168.55.246:8080",
+        "job": "prometheus"
+      },
+      "export_success_total": {
+        "counter": 13,
+        "rate": 0
+      }
+    },
+    "metricset": {
+      "name": "collector",
+      "period": 10000
+    },
+    "service": {
+      "address": "192.168.55.246:8080",
+      "type": "prometheus"
+    },
+    "event": {
+      "dataset": "prometheus.collector",
+      "module": "prometheus",
+      "duration": 21188032
+    },
+    "kubernetes": {
+      "replicaset": {
+        "name": "jx-reportasje-extractor-cdfdfc9f5"
+      },
+      "labels": {
+        "app": "jx-reportasje-extractor",
+        "draft": "draft-app",
+        "pod-template-hash": "cdfdfc9f5"
+      },
+      "container": {
+        "name": "reportasje-extractor",
+        "image": "523883733847.dkr.ecr.eu-west-1.amazonaws.com/mentor-medier/reportasje-extractor:0.0.33"
+      },
+      "node": {
+        "name": "ip-192-168-61-83.eu-west-1.compute.internal"
+      },
+      "pod": {
+        "name": "jx-reportasje-extractor-cdfdfc9f5-28ln8",
+        "uid": "dfd46d68-6e12-4742-ad50-c8108da7ad99"
+      },
+      "namespace": "jx-staging"
+    },
+    "ecs": {
+      "version": "1.5.0"
+    },
+    "host": {
+      "name": "jenkins-x-metricbeat-6m6ms"
+    }
+  },
+  "fields": {
+    "@timestamp": [
+      "2020-09-17T08:29:31.338Z"
+    ]
+  },
+  "highlight": {
+    "prometheus.labels.source_name": [
+      "@kibana-highlighted-field@reportasje@/kibana-highlighted-field@"
+    ],
+    "kubernetes.container.name": [
+      "@kibana-highlighted-field@reportasje-extractor@/kibana-highlighted-field@"
+    ],
+    "kubernetes.namespace": [
+      "@kibana-highlighted-field@jx-staging@/kibana-highlighted-field@"
+    ],
+    "prometheus.labels.content_type": [
+      "@kibana-highlighted-field@image@/kibana-highlighted-field@"
+    ]
+  },
+  "sort": [
+    1600331371338
+  ]
+}

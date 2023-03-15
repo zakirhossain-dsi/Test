@@ -1,0 +1,170 @@
+<div class="frontpage-dummy">
+    <div class="paywall-order">
+        <h2 class="center padding">$paywallFormElement.formHeader</h2>
+        <div class="w-row">
+            <div class="paywall-order-left w-col col-sm-4">
+                <h5>$paywallFormElement.subscriptionSectionTitle</h5>
+                $subscriptionListHtml
+            </div>
+            <div class="paywall-order-right w-col col-sm-8">
+                <h5 class="dettefardu">$paywallFormElement.formSectionTitle</h5>
+                <div class="paywall-order-form-wrap paywall-buy-form w-clearfix">
+                    <div class="paywall-offer-list paywall-list">$firstOfferList</div>
+                    <div class="paywall-order-form w-form">
+                        <div class="paywallFormError"></div>
+                        <form id="subscriptionForm" method="get" accept-charset="UTF-8" class="form w-clearfix paywall-order-form" action="$paywallFormAction">
+                            <div class="paywall-buy-form-left w-clearfix giftfield" #if(!$isGiftSubscription)style="display:none;"#end>
+                                <h2 class="form-title">Hvem skal få avisa?</h2>
+                                <div class="order-left w-clearfix">
+                                    <label for="receiverphone">Telefon:</label>
+                                    <div class="refresh-biznode-wrapper">
+                                        <input type="text" class="paywall-input required clearboth w-input bisnode-phone bisnode-receiver" maxlength="256" placeholder="Ditt nummer*" name="receiverphone">
+                                        <a href="javascript:void(0);" class="refresh-biznode bisnode-btn w-button">Hent info</a>
+                                    </div>
+                                    <label for="firstname">Fornavn:</label>
+                                    <input type="text" class="paywall-input required clearboth w-input" maxlength="256" name="receiverfirstname" placeholder="Fornavn*">
+                                    <label for="lastname">Etternavn:</label>
+                                    <input type="text" class="paywall-input required w-input" maxlength="256" name="receiverlastname" placeholder="Etternavn*">
+                                    <label for="email">E-post:</label>
+                                    <input type="text" class="paywall-input required w-input" maxlength="256" placeholder="E-post*" name="receiveremail">
+                                    <label for="street" class="paywall-input-hidden">Gate:</label>
+                                    <input type="text" class="paywall-input required clearboth w-input paywall-input-hidden" maxlength="256" placeholder="Gate*" name="receiveraddress">
+                                    <div class="w-row">
+                                        <div class="w-col col-sm-3 w-col-small-3 w-col-tiny-3">
+                                            <label for="receiveraddress2" class="paywall-input-hidden">Husnr:</label>
+                                            <input type="number" class="paywall-input w-input paywall-input-hidden" maxlength="256" placeholder="Husnr" name="receiveraddress2">
+                                        </div>
+                                        <div class="w-col col-sm-3 w-col-small-3 w-col-tiny-3">
+                                            <label for="receiverentrance" class="paywall-input-hidden">Oppgang:</label>
+                                            <input type="text" class="paywall-input clearboth w-input paywall-input-hidden" maxlength="256" placeholder="Oppgang" name="receiverentrance">
+                                        </div>
+                                        <div class="w-col col-sm-3 w-col-small-3 w-col-tiny-3">
+                                            <label for="receiverfloor" class="paywall-input-hidden">Etasje:</label>
+                                            <input type="text" class="paywall-input clearboth w-input paywall-input-hidden" maxlength="256" placeholder="Etasje" name="receiverfloor">
+                                        </div>
+                                        <div class="w-col col-sm-3 w-col-small-3 w-col-tiny-3">
+                                            <label for="receiverapartment" class="paywall-input-hidden">Leilighetsnr:</label>
+                                            <input type="text" class="paywall-input clearboth w-input paywall-input-hidden" maxlength="256" placeholder="Leil.nr" name="receiverapartment">
+                                        </div>
+                                    </div>
+                                    <div class="form-postnr">
+                                        <label for="receiverzip" class="paywall-input-hidden">Postnr:</label>
+                                        <input type="text" class="paywall-input required w-input paywall-input-hidden" maxlength="256" placeholder="Postnr*" name="receiverzip">
+                                    </div>
+                                    <div class="form-poststed">
+                                        <label for="receiverlocation" class="paywall-input-hidden">Postort:</label>
+                                        <input type="text" class="paywall-input required clearboth w-input paywall-input-hidden" maxlength="256" placeholder="Poststed*" name="receiverlocation">
+                                    </div>
+                                </div>
+                            </div> <!-- end of form left/receiver -->
+                            <div class="paywall-buy-form-left regularOrderForm">
+                                <h2 class="form-title title-right giftfield">Hvem skal betale?</h2>
+                                <div class="order-right w-clearfix">
+                                    <label for="cell">Telefon:</label>
+                                    <div class="refresh-biznode-wrapper">
+                                        <input type="text" class="input required w-input bisnode-phone" maxlength="256" id="cell" maxlength="256" name="cell" placeholder="Ditt nummer*">
+                                        <a href="javascript:void(0);" class="refresh-biznode bisnode-btn w-button">Hent info</a>
+                                    </div>
+
+                                    <label for="firstname">Fornavn:</label>
+                                    <input type="text" class="input required w-input" id="firstname" maxlength="256" name="firstname" placeholder="Fornavn*">
+
+                                    <label for="lastname">Etternavn:</label>
+                                    <input type="text" class="input required w-input" id="lastname" maxlength="256" name="lastname" placeholder="Etternavn*">
+
+                                    <label for="email">E-post:</label>
+                                    <input type="text" class="input required w-input" id="email" maxlength="256" name="email" placeholder="E-post*">
+
+                                    <label for="street" class="paywall-input-hidden">Gate:</label>
+                                    <input type="text" class="input required w-input paywall-input-hidden" id="street" maxlength="256" name="street" placeholder="Gate*">
+
+                                    <div class="w-row">
+                                        <div class="w-col col-sm-3 w-col-small-3 w-col-tiny-3">
+                                            <label for="housenumber" class="paywall-input-hidden">Husnr:</label>
+                                            <input type="number" class="input _95 w-input paywall-input-hidden" id="housenumber" maxlength="256" name="housenumber" placeholder="Husnr*">
+                                        </div>
+                                        <div class="w-col col-sm-3 w-col-small-3 w-col-tiny-3">
+                                            <label for="door" class="paywall-input-hidden">Oppgang:</label>
+                                            <input type="text" class="input _95 w-input paywall-input-hidden" id="door" maxlength="256" name="door" placeholder="Oppgang">
+                                        </div>
+                                        <div class="w-col col-sm-3 w-col-small-3 w-col-tiny-3">
+                                            <label for="floor" class="paywall-input-hidden">Etasje:</label>
+                                            <input type="text" class="input _95 w-input paywall-input-hidden" id="floor" maxlength="256" name="floor" placeholder="Etasje">
+                                        </div>
+                                        <div class="w-col col-sm-3 w-col-small-3 w-col-tiny-3">
+                                            <label for="apartment" class="paywall-input-hidden">Leilighetsnr:</label>
+                                            <input type="text" class="input w-input paywall-input-hidden" id="apartment" maxlength="256" name="apartment" placeholder="Leil.nr">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-postnr">
+                                        <label for="postnumber" class="paywall-input-hidden">Postnr:</label>
+                                        <input type="text" class="input required w-input  paywall-input-hidden" id="postnumber" maxlength="256" name="postnumber" placeholder="Postnr*">
+                                    </div>
+                                    <div class="form-poststed">
+                                        <label for="location" class="paywall-input-hidden">Poststed:</label>
+                                        <input type="text" class="input required w-input paywall-input-hidden" id="location" maxlength="256" name="location" placeholder="Poststed*">
+                                    </div>
+                                    <div class="w-row refcode-hidden">
+                                        <label for="refCode" class="refcode-hidden">Rabattkode:</label>
+                                        <input type="text" class="input w-input refcode-hidden" id="refCode" maxlength="256" name="refCode" placeholder="Rabattkode">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="otherPriceInfo">
+                                <!--p class="smaller">Bor du i utlandet?&nbsp;<a href="$utlandet_price_pdf_locaton" target="_blank">Se egne priser.<br><br></a-->
+                                <p class="smaller">Bor du i utlandet?&nbsp;<a href="/abonnement/utland" target="_blank">Se egne priser.<br><br></a>
+                            </div>
+                            <div class="paywall-buy-form-left col-1-1 w-clearfix">
+                                <div class="startdate-container" #if(!$showStartDate)style="display:none;"#end>
+                                    <h2 class="form-title">Abonnementsvalg</h2>
+                                    <label for="startdate">Startdato</label>
+                                    <div class="order-right w-clearfix datefield">
+                                        <input type="date" class="paywall-input required clearboth hallf-width w-input startdate" name="startdate" placeholder="DD/MM/ÅÅÅÅ">
+                                    </div>
+                                </div>
+                                <div class="paywall-buy-form-amount price-container w-clearfix">
+                                    <h2 class="form-title">Å betale</h2>
+                                    <div><strong>Totalsum <span class="subscriptionprice">$subscriptionPrice</span> kr</strong></div>
+                                </div>
+                            </div>
+
+
+                            <div class="paywall-buy-form-payment-wrap w-clearfix onetimecode" #if($isGiftSubscription)style="display:none;"#end>
+                                <div class="paywall-buy-form-payment">Hvordan vil du motta engangskoden?</div>
+                                <div class="paywall-radio clear-left w-radio">
+                                    <input type="radio" id="emailCredentialType" name="credentialType" value="email" data-name="credentialType" class="w-radio-input">
+                                    <label for="emailCredentialType" class="w-form-label">E-POST</label>
+                                </div>
+                                <div class="paywall-radio w-radio">
+                                    <input type="radio" id="mobileCredentialType" name="credentialType" value="phone" data-name="credentialType" class="w-radio-input" checked>
+                                    <label for="mobileCredentialType" class="w-form-label">MOBILTELEFON</label>
+                                </div>
+                            </div>
+
+                            <div class="paywall-check w-checkbox">
+                                <input type="checkbox" id="terms" name="terms" class="w-checkbox-input">
+                                <label for="term" class="w-form-label term-label">JA, JEG GODKJENNER KLAR TALES
+                                    <a href="/vilkar" target="_blank">VILKÅR FOR PERSONVERN OG MARKEDSFØRING</a>
+                                </label>
+                            </div>
+
+                            <div class="paywall-buy-submit-wrap">
+                                <input id="formSubmit" name="formSubmit" type="submit" value="Betal med Vipps" class="btn float w-button">
+                            </div>
+                            <input type="hidden" name="subscription" value="$firstSubscription">
+                            <input type="hidden" name="formName" value="subscriptionOffer">
+                            <input type="hidden" name="paymentMethod" value="vippsRecurring" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<span class="analyticsElement" google-analytics="true" cx-analytics="true" event-action="order" siteId="1144072016511259717"
+      origin="men-paywall" cxPersistQueryId="c595bb98e04df851d69419c496286ba966c81da5" paywall-step="order"></span>
+<script>
+    var errorMsg = {emptyMsg: 'Kan ikke være blank', invalidEmailMsg: 'Ugyldig epost', termsMsg : 'Må sjekke dette for å fortsette',invalidNorwayPhone: 'Vennligst oppgi et gyldig nummer',invalidBisnodeNumber:'Vi fant ikke adressen, fyll inn manuelt',
+        invalidVoucher: 'Ugyldig kupongkode!', voucherLookUpMsg: 'Ser etter gyldig kupongkode ...', validVoucher: "Kupongkoden er Ok!",invalidPhone:'Vennligst oppgi et gyldig telefonnummer'};
+</script>

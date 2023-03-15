@@ -1,0 +1,13 @@
+"websites": {
+  "dagen": {
+    "website_section": {
+      "referent": {
+        "id": "/bibelordet",
+        "provider": "api.sandbox.mentormedier.arcpublishing.com/site/v3/website",
+        "type": "section",
+        "website": "dagen"
+      },
+      "type": "reference"
+    }
+  }
+}
