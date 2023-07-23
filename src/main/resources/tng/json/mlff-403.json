@@ -1,0 +1,22 @@
+{
+  "page": 1,
+  "perPage": 10,
+  "totalItems": 100,
+  "totalPages": 10,
+  "responseInfo": {
+    "responseCode": "000",
+    "responseMessage": "Success",
+    "responseDesc": "Success"
+  },
+  "violations": [
+    {
+      "violationId": "20220622-28902995",
+      "violationDate": "22/06/2022 10:00:00",
+      "vehicleNumber": "VAV2983",
+      "ownerIdNumber": "",
+      "violationSubcode": "R01-0001",
+      "transactionAmount": "2.10",
+      "violationStatus":"OPEN"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "page": 1,
+  "perPage": 10,
+  "totalItems": 100,
+  "totalPages": 10,
+  "responseInfo": {
+    "responseCode": "000",
+    "responseMessage": "Success",
+    "responseDesc": "Success"
+  },
+  "violationDetails": [
+    {
+      "violationCategory": "RFID Tag",
+      "violationSubcode": "R01-0001",
+      "violationDescription": "Invalid tag serial number"
+    }
+  ]
+}

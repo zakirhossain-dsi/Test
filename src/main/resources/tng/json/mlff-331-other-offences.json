@@ -1,0 +1,20 @@
+{
+  "page": 1,
+  "perPage": 10,
+  "totalItems": 100,
+  "totalPages": 10,
+  "responseInfo": {
+    "responseCode": "000",
+    "responseMessage": "Success",
+    "responseDesc": "Success"
+  },
+  "otherViolations": [
+    {
+      "violationId": "20220622-28902995",
+      "violationDate": "22/06/2022 10:00:00",
+      "vehicleNumber": "VAV 2983",
+      "violationSubCodes": "R01-001, V01-003, M01-001",
+      "violationStatus": "OPEN"
+    }
+  ]
+}

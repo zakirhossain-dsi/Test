@@ -1,0 +1,23 @@
+{
+  "tagDetails": {
+    "vehicleDetails":{
+      "vehicleType": "Motocar",
+      "vehicleMake": "TOYOTA",
+      "vehicleModel": "ALTIS",
+      "vehicleYear": "2023",
+      "vehiclePlateNumber": "abc123"
+    },
+    "rfidDetails": {
+      "mlffStatus": "DISABLED",
+      "rfidActivationDate": "20/04/2023",
+      "rfidActivationTime": "10:28:55 AM",
+      "mlffEnableDate": null,
+      "mlffEnableTime": null
+    }
+  },
+  "responseInfo": {
+    "responseCode": "000",
+    "responseMessage": "Success",
+    "responseDesc": "Success"
+  }
+}

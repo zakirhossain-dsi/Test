@@ -1,0 +1,17 @@
+{
+  "tags": [
+    {
+      "vehiclePlateNumber": "PNG 1234",
+      "tagSerialNo": "TNG543216789084",
+      "mlffStatus": "ENABLED",
+      "outstandingAmt": 2.5,
+      "paymentOptionName": "Visa ending with 1234",
+      "displayIcon": "VISA"
+    }
+  ],
+  "responseInfo": {
+    "responseCode": "000",
+    "responseMessage": "Success",
+    "responseDesc": "Success"
+  }
+}
