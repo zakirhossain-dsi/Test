@@ -1,0 +1,5 @@
+{
+  "eventName": "PENDING_PAYMENT_REMINDER",
+  "recipients": "abc@gmail.com,xxx@gmail.com",
+  "placeholders": "<Place holder json in string format>"
+}

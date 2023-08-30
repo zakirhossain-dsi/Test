@@ -1,0 +1,5 @@
+{
+    "eventName": "MLFF_ENABLED_SUCCESSFULLY",
+    "recipients": "abc@gmail.com",
+    "placeholders": "<String format of placeholders json. Refer to 4.c>"
+}

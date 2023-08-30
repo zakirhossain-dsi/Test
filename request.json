@@ -1,63 +1,11 @@
 {
-  "violationInfo": {
-    "anprImage": "https://fastly.picsum.photos/id/581/200/300.jpg",
-    "violationId": "20220622-28902995",
-    "violationDate": "22/06/2022 10:00:00",
-    "transactionSerialNumber": "123456789",
-    "violationStatus": "OPEN",
-    "transactionAmount": "2.10",
-    "transactionStatus": "Failed",
-    "entryLocation": "DUKE - SENTRAL PASAR",
-    "entryTime": "22/06/2022 10:00:00",
-    "exitLocation": "DUKE - SENTRAL PASAR",
-    "exitTime": "22/06/2022 10:00:00",
-    "detectedVehiclePlateNumber": "VAV 2983",
-    "detectedVehicleModel": "Myvi",
-    "detectedVehicleMake": "Perodua",
-    "detectedVehicleClass": "01",
-    "detectedVehicleSpeed": "90 kmh",
-    "detectedVehicleWeight": "1100 kg",
-    "violationSubCodes": {
-      "page": 1,
-      "perPage": 10,
-      "totalItems": 100,
-      "totalPages": 10,
-      "data": [
-        {
-          "violationCode": "01",
-          "violationCategory": "RFID Tag",
-          "violationSubcode": "R01-0001",
-          "violationDescription": "Invalid tag serial number"
-        }
-      ]
-    }
-  },
-  "vehicleRegInfo": {
-    "rfidTagSerialNumber": "E20034120139FB000E346CE3",
-    "vehiclePlateNumber": "VAV 2983",
-    "vehicleClass": "01",
-    "jpVehicleClass": "01",
-    "vehicleMake": "Perodua",
-    "vehicleModel": "Myvi",
-    "customerIdNumber": "741028-01-6551",
-    "customerName": "Mr. XYZ",
-    "vehicleOwnership": "Yes",
-    "mlffStatus": "Enabled",
-    "rfidTagStatus": "Active"
-  },
-  "otherOffences": {
-    "page": 1,
-    "perPage": 10,
-    "totalItems": 100,
-    "totalPages": 10,
-    "data": [
-      {
-        "violationId": "20220622-28902995",
-        "violationDate": "22/06/2022 10:00:00",
-        "vehicleNumber": "VAV 2983",
-        "violationSubCode": "R01-001, V01-003, M01-001",
-        "violationStatus": "OPEN"
-      }
-    ]
-  }
+  "eventName": "MLFF_ENABLED_SUCCESSFULLY",
+  "isPushNotification": true,
+  "isEmailNotification": true,
+  "pushInTitle" : "MLFF Enabled Successfully",
+  "pushInBody": "Hooray! One of your TNG RFID tags has been enabled for MLFF. Have a safe journey!",
+  "recipients": "abc@gmail.com",
+  "cc": "yyy@gmail.com,zzz@gmail.com",
+  "bcc": "sam@gmail.com",
+  "placeholders": "{\"key\":\"value\"}"
 }

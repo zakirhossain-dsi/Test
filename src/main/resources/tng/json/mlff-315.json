@@ -1,0 +1,7 @@
+{
+  "eventName": "NEW_DISABLED_TAG_ADDED",
+  "recipients": "abc@gmail.com,xxx@gmail.com",
+  "cc": "",
+  "bcc": "",
+  "placeholders": ""
+}

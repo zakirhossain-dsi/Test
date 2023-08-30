@@ -1,23 +1,36 @@
-rfid_tag_serial_number
-
-vehicle_plate_number
-
-vehicle_class
-
-jp_vehicle_class
-
-vehicle_make
-
-vehicle_model
-
-customer_name
-
-customer_id_number
-
-owner_name
-
-owner_id_number
-
-mlff_status
-
-vehicle_ownership
+SA&D Daily Checkpoint
+[MLFF] Functional & Solution daily huddle
+Daily Hurdle - Back Office & Backend Services
+Backoffice portal - violation Details
+MLFF-17: Transaction & Payment list view (UI)
+MLFF-21: Transaction Validation & Processing
+MLFF-4   Enable existing RFID tag with 1 SOF selected
+MLFF-178: Create an API to query the violation details of an MLFF Transaction
+MLFF-331: Create an UI to view the violation details of an MLFF Transaction
+MLFF-101: 4. Balance Sheet Details
+MLFF-175: Implement a UI to view all violation cases
+MLFF-403: Implement an API to fetch all violation cases
+MLFF-334: Create a REST API to fetch RFID Tag list
+MLFF-335: Create a REST API to fetch RFID Tag details
+MLFF-121: [Pilot] Violation Report for BackOffice
+MLFF-166: Implement logic to create json message publish to MLFF_TXPAIRING topic
+MLFF-425: Integration between MLFF-315 & MLFF-319
+MLFF-426: Integration between MLFF-320 & MLFF-153
+MLFF-394: [Functional Update] Violation Status LOV : To update to (Open/Resolved) instead of (Open/Paid/Cancelled)
+MLFF-439: Implementation of "[Overall] Violation Daily Report"
+MLFF-443: Implementation of "[Overall] Violation Monthly Summary Report"
+MLFF-445: Implementation of "[Overall] MLFF Daily Transactions Report"
+MLFF-185 [Refund] Pilot Refund Payment Report
+MLFF-122 [Overall] Violation Daily Report
+MLFF-123 [Overall] Violation Monthly Summary Report
+MLFF-144 [Pilot] MLFF Transactions - Matched cases
+MLFF-466: Integration between MLFF-203 and MLFF-178
+MLFF-145: Validate MLFF RFID Transaction
+MLFF-472: Update Redis cache with MESSAGE#5.0 based on update in mlff_sof and mlff_whitelist tables
+MLFF-523: Create an API to test MLFF reports
+MLFF-522: Database setup for MLFF reports
+MLFF-329: 7. Payment Retry & Requery to Payment Gateway
+MLFF-97: 8. Pending Transaction Clearance
+MLFF-100: 5. Payment Processing & Send Payment Request
+MLFF-523: Create an API to test MLFF reports
+MLFF-548: Database setup for email notification

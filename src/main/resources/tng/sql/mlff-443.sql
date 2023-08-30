@@ -19,24 +19,25 @@ select
 	violationDetail.violation_code,
 	violationCode.violation_category,
 	violationDetail.violation_subcode,
-	violationsubcode.violation_description,
-	violation.supplemental_info,
+	violationSubcode.violation_description,
+	violation.supplemental_info,	
 	violation.vehicle_number,
 	violation.vehicle_class,
-	vehiclerecognition.vehicle_weight,
+	vehicleRecognition.vehicle_weight,
 	txn.veh_speed,
 	violation.regis_vehicle_number,
 	violation.regis_vehicle_class,
-	paymentnotification.payment_status,
-	paymentnotification.pay_method,
+	paymentNotification.payment_status,
+	paymentNotification.pay_method,
 	datediff(last_modified_date, created_date) as latePaymentDays,
-	txn.tran_amt
+	txn.tran_amt,
+    txn.is_pilot
 from mlff_violations violation
 inner join mlff_violation_details violationDetail on violationDetail.violation_ref_id = violation.violation_ref_id
 inner join mlff_violation_code violationCode on violationCode.violation_code = violationDetail.violation_code
-inner join mlff_violation_subcode violationSubcode on violationSubcode.violation_subcode = violationdetail.violation_subcode
+inner join mlff_violation_subcode violationSubcode on violationSubcode.violation_subcode = violationDetail.violation_subcode
 left join mlff_transactions txn on txn.id = violation.mlff_transaction_id
-left join mlff_vehicle_recognition vehicleRecognition on vehiclerecognition.id = violation.vehicle_recognition_id
+left join mlff_vehicle_recognition vehicleRecognition on vehicleRecognition.id = violation.vehicle_recognition_id
 left join mlff_orders mlffOrder on mlfforder.transaction_id_fk = txn.id
-left join mlff_payment_notifications paymentNotification on paymentnotification.order_id_fk = mlfforder.id
-where violation.created_date >= :beginningOfYesterDay and violation.created_date < :endOfYesterDay;
+left join mlff_payment_notifications paymentNotification on paymentNotification.order_id_fk = mlfforder.id
+where violation.created_date >= :beginningOfLastMonth and violation.created_date <= :endOfLastMonth;

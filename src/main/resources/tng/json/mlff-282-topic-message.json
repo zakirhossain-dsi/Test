@@ -1,0 +1,7 @@
+{
+  "eventName": "MLFF_DISABLED_SUCCESSFULLY",
+  "recipients": "abc@gmail.com",
+  "cc": "",
+  "bcc": "",
+  "placeholders": "{\n  \"fullName\": \"Jackie\",\n  \"bodyTitle\": \"MLFF Disabled Automatically\",\n  \"summary\": \"Your terminated TNG RFID tag has been automatically disabled for MLFF. Please ensure your vehicle has a replacement MLFF enabled tag for a seamless journey.\",\n  \"detail\": \"<tr>\\n    <td>Vehicle Number<br/>{vehicleNumber}</td>\\n    <td>TNG RFID tag<br/>{rfidTag}</td>\\n</tr>\\n<tr>\\n    <td colspan=\\\"2\\\">MLFF Status<br/>{mlffStatus}</td>\\n</tr>\"\n}"
+}
