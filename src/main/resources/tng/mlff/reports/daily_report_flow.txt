@@ -1,0 +1,188 @@
+Files:
+-------
+CronConfig.java
+ReportJob.java
+BatchJobConfig.java
+ReportDataSeed.java
+ReportJobFactory.java
+ReportProducer.java
+FileFtpPublisher.java
+FileDirPublisher.java
+FileNameUtils.java
+
+DB preparation:
+---------------
+Insert a record into mlff_system_configs
+name = REPORT_PUBLISH_TARGET
+type = String
+value = SFTP
+
+Insert a record into mlff_system_configs
+name = REPORT_OUTPUT_DIRECTORY_PATH
+type = String
+value = rfidtpmsreport-sit
+
+Create a store procedure called "transfer_data_for_daily_reports".
+
+Process:
+-----------
+1. Read cron job expression from mlff_crons.
+select value from mlff_crons where name = 'report_daily_job';
+
+2. Create a scheduler based on the cron job expression.
+
+3. Generate the postedDate as follows:
+postedDate = Beginning of the current system date - 1 day
+
+4. Get all service provider IDs from mlff_service_providers table.
+select sp_id from mlff_service_providers
+
+5. Get all daily report descriptors from mlff_reports
+select * from mdt_reports
+where is_enabled = 1
+and active = 1
+and deleted = 0
+and report_scheduled = 'DAILY';
+
+6. Preparation of Working Directory.
+a. Read the environment variable named "job.report.workdir" and build the workDirectory as follows:
+workDirectory = Value of the environment variable "job.report.workdir" + postedDate
+
+b. If the environment variable is null, use the default working directory as follows:
+workDirectory = Value of the system variable "user.dir" + "\reports" + postedDate
+
+c. Verify if the workDirectory exists in the file system.
+- If exists, delete all the contents from the workDirectory in the file system.
+- If not exists, create the workDirectory in the file system.
+
+7. Job creation:
+In this step we'll create a job to generate, publish, and keep records of the generated reports for all service providers.
+The job will be composed of several steps while each step will have a task.
+
+a. Get the system configuration by executing the following query
+select * from mdt_system_configs msc where name = 'REPORT_PUBLISH_TARGET';
+
+Job Step 1:
+Step name: report_step_transaction-data-seed
+In this step we will transfer all transactions from mlff_transactions table to rpt_transactions table based on the posted date.
+This will happen through a stored procedure.
+- Get job parameter "requireSeedData"
+- If requireSeedData = false, terminate this job step.
+- If requireSeedData = true, execute the store procedure called "transaction_cut_off" with the following properties.
+postedDate = use the value from step 3
+- terminate this job step
+
+Job Step 2:
+Now we need to build several job steps based on the spervice providers obtained at step 4 and the report descriptors obtained at step 5.
+If a report needs to be generated for a service provider, we need to build a step. again if a report needs to be generated
+for another service provider, we need to add another step. Therefore, if we have N reports that need to be generated
+for M service providers, we need to add N x M steps.
+
+- Split the list of report descriptors obtained at step 5 into 2 lists based on is_sp_based column.
+1st list = sp based
+2nd list = non sp based
+
+- For each report descriptors on 1st list (sp based), build a job step as follows.
+Step name: "report_step_" + mlff_reports.report_code
+Step execution:
+
+- Prepare the following job parameters
+jobRunDate -> start time of the job execution
+reportPostedDateStart -> use posted date from step 3
+reportPostedDateEnd -> use end of day of posted date from step 3
+postedDate -> use posted date from step 3
+reportCode -> mlff_reports.report_code
+
+- Prepare the following report parameters
+Get all report parameters for the current report descriptor from mlff_report_parameters.
+Create a list named missingParameters and a map called reportParameters.
+For each report parameter, do the followings:
+ If the mlff_report_parameters.job_parameter_name doesn't exist on the job parameter list, process the next report parameter.
+ Get the value for the report parameter from the job parameter list using mlff_report_parameters.job_parameter_name
+ If the mlff_report_parameters.parameter_type is DATE or STRING and the value is also of that type, add report parameter
+ to the report parameter list. key = mlff_report_parameters.name, value = get value from the above step.
+ Otherwise, Add the parameter to the missing parameter list.
+
+ If the size of reportParameters doesn't match with the count of non optional report parameters, throw an exception.
+ message = "Required report parameters are missing: " + missingParameters.
+
+- Execute the query according to the batch configuration.
+- Load the report file using the following file name:
+File name = "reports/" + mlff_reports.report_template_name + ".jasper"
+
+- Fill the report using the loaded report file and data source.
+
+- Prepare the output directory and file name.
+Directory:
+ use the value from step 6 + mlff_reports.report_code
+
+File name:
+ render the mlff_reports.filename_expression with the report parameters
+
+- Based on the mlff_reports.format, export the report file to the above directory.
+
+- Prepare and insert a record into rpt_reports table
+Generate MD5 digest out of the file path of the generated report
+MD5 should be in upper case and string format
+- Terminate the current step execution
+
+Job Step 3: publish the report
+Step name: report_step_publish
+SFTP:
+	directory: environment variable outputDir, default ""
+
+	Prepare report context variables:
+		jobRunDate -> job start time
+		reportPostedDateStart -> use the value posted date.
+		reportPostedDateEnd -> use the end of posted date
+		postedDate -> use posted date
+
+	Prepare the target directory in SFTP server.
+		Base directory =
+		Relative path =
+			If mlff_reports.report_prefix_directory ends with "/", use base directore + mlff_reports.report_prefix_directory + jobRunDate in "yyyy-MM-dd-HH-mm-ss" format.
+			Otherwise, use use base directore + mlff_reports.report_prefix_directory
+		put the file in the base directory + relative path.
+
+
+FILE_SYSTEM:
+	destination directory: system variable REPORT_OUTPUT_DIRECTORY_PATH, default workingDirectory
+
+	Prepare report context variables:
+		jobRunDate -> job start time
+		reportPostedDateStart -> use the value posted date.
+		reportPostedDateEnd -> use the end of posted date
+		postedDate -> use posted date
+
+	Prepare the target directory in File server.
+		Base directory =
+		Relative path =
+			If mlff_reports.report_prefix_directory ends with "/", use base directore + mlff_reports.report_prefix_directory + jobRunDate in "yyyy-MM-dd-HH-mm-ss" format.
+			Otherwise, use use base directore + mlff_reports.report_prefix_directory
+		copy the file to the base directory + relative path	with copy option REPLACE_EXISTING
+
+Prepare the job parameter
+
+- Read system configuration REPORT_OUTPUT_DIRECTORY_PATH
+- If system configuration is missing, use the following one
+<current directory> + "\reports"
+
+postedDate -> postedDate
+reportFormat -> NA
+outputDir -> use the value from the above step
+doSeedData ->
+reportCodes ->
+reportSpids ->
+rerunDate ->
+
+Register the job to JobRegistry
+Finally run the job.
+Unregister the job from JobRegistry
+
+
+Application Configuration:
+job.report.workdir
+job.report.transfer.timeout, default 120  minute
+
+System Configuration:
+REPORT_PUBLISH_TARGET

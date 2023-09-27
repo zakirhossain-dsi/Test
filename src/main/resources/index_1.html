@@ -1,0 +1,119 @@
+<!DOCTYPE html   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>All cards declined</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+             @font-face {       font-family: 'Gilroy-Regular';       font-style: normal;       font-weight: normal;       src: url('./assets/Gilroy-Regular.woff') format('woff');     }      body {       margin: 0 !important;       padding: 0 !important;     }      * {       font-family: "OpenSans", Helvetica, Arial, sans-serif;       color: black;     }      .btn {       background-color: #F5CC00;       box-sizing: border-box;       border-radius: 8px;       /* padding: 10px; */       padding-left: 30px;       padding-right: 30px;       padding-top: 5px;       padding-bottom: 5px;       margin-top: 7px;       display: inline-block;       text-align: center;       font-size: 14px;       font-weight: bold;       font-style: italic;       font-family: Gilroy-Regular;       -webkit-user-select: none;       user-select: none;       cursor: pointer;     }      .btn:hover {       background-color: #F5CC00;     }      a {       text-decoration: none;       color: #1A459C;     }      .header-text {       font-size: 14px;       font-family: Gilroy-Regular;       font-style: italic;       line-height: 32px;       color: #1A459C;       font-weight: bold;     }      .body-text {       font-size: 14px;       font-family: Gilroy-Regular;       font-style: italic;       line-height: 20px;       color: #1A459C !important;       margin-bottom: 100px;       font-weight: bold;     }      .announce-text {       font-size: 14px;       font-family: Gilroy-Regular;       font-style: italic;       text-align: center;       color: #1A459C;       font-weight: bold;     }      hr {       border: 0 none;       height: 1px;       background-color: #1A459C;     }
+    </style>
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" width='600' style='border-collapse: collapse; margin: 0 auto;'>
+    <tr>
+        <td><img style="display: block; max-width: 600px;" alt='logo' src="/images/triangular-header.PNG"
+                 th:src="'cid:' + ${logo}" width='100%'></td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+                <tr>
+                    <td width="45" height="70"> &nbsp;</td>
+                    <td height="70" class="header-text"> Dear <span th:text="${customerName}"
+                                                                    class="header-text"></span>,
+                    </td>
+                    <td width="45" height="70"> &nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="45"> &nbsp;</td>
+                    <td><p class="body-text"> Please note that your secondary card has been charged on <span
+                            th:text="${newDate}" class="body-text"></span> as your default card ending with <span
+                            th:text="${cardNo}"></span> was declined.<br><br> This could be due to:<br> 1. Your
+                        credit/debit card had insufficient funds to pay the toll fare used.<br> 2. Your credit/debit
+                        card has expired.<br> 3. Your credit/debit card has been barred by the bank.<br><br> Please
+                        ensure your credit/debit card is valid and has sufficient funds to avoid any issues in
+                        future.<br><br> Thank you. </p>
+                        <hr>
+                        <p class="announce-text"> PLEASE LOGIN TO YOUR ACCOUNT AT TOUCH 'N GO RFID PORTAL TO CLEAR YOUR
+                            PENDING TRANSACTIONS AND UPDATE YOUR CARD INFORMATION:
+                        <table style="margin-left: auto; margin-right: auto;">
+                            <tr>
+                                <td class="btn"><a th:href="${link}">LOGIN NOW</a></td>
+                            </tr>
+                        </table>
+                        </p>
+                        <hr>
+                    </td>
+                    <td width="45"> &nbsp;</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 20px;background-color: #ffffff;"></td>
+    </tr>
+    <tr>
+        <td style="height: 34px;"></td>
+    </tr>
+    <tr>
+        <td style="height: 34px;text-align: center;font-size: 14px;font-family: 'Calibri';color: #0046b7;font-weight: 500;">
+            Have more questions? Get in touch with us!<br> Touch 'n Go Careline Centre
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+                <tr>
+                    <td style="width: 122px;"></td>
+                    <td style="width: 17px;"><img style='display: block;' alt='email'
+                                                  src='assets/footer-contact-2-col.jpg' th:src="'cid:' + ${mail}"></td>
+                    <td style="width: 6px;"></td>
+                    <td style="width: 176px;padding: 5px 0px;"><a href="mailto:careline@touchngo.com.my"
+                                                                  style="text-decoration: none;color: #000000;font-size: 14px;font-family: 'Calibri';font-weight: 500;">
+                        careline@touchngo.com.my </a></td>
+                    <td style="width: 18px;"></td>
+                    <td style="width: 16px;"><img style='display: block;' alt='email' th:src="'cid:' + ${phone}"
+                                                  src='assets/footer-contact-5-col.jpg'></td>
+                    <td style="width: 6px;"></td>
+                    <td style="width: 99px;padding: 5px 0px;"><a href="tel:60327148888"
+                                                                 style="text-decoration: none;color: #000000;font-size: 14px;font-family: 'Calibri';font-weight: 500;">
+                        +60327148888 </a></td>
+                    <td style="width: 146px;"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: center;font-family: 'Calibri';font-size: 14px;font-weight: 500;padding: 5px 0px;color: #0046b7;">
+            Tower 6, Avenue 5, Bangsar South, No. 8, Jalan Kerinchi, 59200 Kuala Lumpur.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+                <tr>
+                    <td style="width: 219px;"></td>
+                    <td style="width: 30px;"><img th:src="'cid:' + ${facebook}" src="assets/footer-sm-2-col.jpg"></td>
+                    <td style="width: 12px;"></td>
+                    <td style="width: 31px;"><img th:src="'cid:' + ${twitter}" src="assets/footer-sm-4-col.jpg"></td>
+                    <td style="width: 13px;"></td>
+                    <td style="width: 30px;"><img th:src="'cid:' + ${instagram}" src="assets/footer-sm-6-col.jpg"></td>
+                    <td style="width: 12px;"></td>
+                    <td style="width: 30px;"><img th:src="'cid:' + ${youtube}" src="assets/footer-sm-8-col.jpg"></td>
+                    <td style="width: 223px;"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: center;font-family: 'Calibri';font-size: 14px;font-weight: 500;padding: 5px 0px;color: #000000;padding-bottom: 15px;">
+            <a href="http://www.touchngo.com.my/" style="text-decoration: none;color: #000000;">
+                www.touchngo.com.my </a></td>
+    </tr>
+    <tr>
+        <td style="height: 16px; background: rgba(0,71,185,1);"></td>
+    </tr>
+</table>
+</body>
+</html>

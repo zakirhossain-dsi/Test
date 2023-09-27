@@ -1,0 +1,214 @@
+https://starosta.atlassian.net/browse/MLFF-12
+https://starosta.atlassian.net/browse/MLFF-37
+
+mlff 38
+- need to update flow chart and description remove whitelist part.
+- mlff 64 unchnaged
+- mlff 63
+- mlff 41 need to update paring to push the msg to topic
+- for paring I need to create a new ticket
+
+
+gantry
+
+mlff 54:
+txn-paring-shceduler
+- add paring information
+
+RFIDTransactionRequest => 54
+RFIDTransactionInfo => 53
+
+https://starosta.atlassian.net/browse/MLFF-38
+https://starosta.atlassian.net/browse/MLFF-40
+https://starosta.atlassian.net/browse/MLFF-41
+https://starosta.atlassian.net/browse/MLFF-126
+
+Pairing Statuses:
+-----------------
+PENDING
+SUCCESS
+FAIL
+
+https://starosta.atlassian.net/browse/MLFF-21
+What is tiering commission rule?
+Is business rule 3 incomplete?
+
+https://starosta.atlassian.net/browse/MLFF-35
+Do we have separate consumer for separate sp?
+
+There are two types of messages:
+- RFID Transaction Message
+- RFID Transaction Log Message
+
+There are two types of status:
+- Message Status
+- Transaction Status
+- Tag Status
+
+MLFF-98
+
+
+
+1) mlff_transactions
+2) mlff_vehicle_recognition
+3) mlff_txn_vehicle_mapping
+
+Titan Schema:
+1) tags
+	- abc999 - 123
+	- abc999 - 124 (active)
+	- abc999 - 125
+
+Step 1:
+
+select * from mlff_transactions txn
+where txn.pairing_status = 'PENDING'
+and created before 5 days ago;
+
+
+Step 2:
+
+ select * from mlff_vehicle_recognition vehicle
+ where created before 5 days ago
+ and id not in (select vehicle_recognition_id from mlff _transactions where txn.pairing_status = 'PENDING' and created before 5 days ago)
+
+
+ select * from mlff_vehicle_recognition vehicle
+ suitable join
+ where created before 5 days ago
+
+
+MLFF-21 + MLFF-54 + MLFF-61
+2.6.1
+
+MLFF-99
+2.6.2 Fare calculation
+
+MLFF-101
+2.9.1
+
+database: mlff_core
+tables: mdt_vector_tag_info
+
+MLFF-15 for mlff status enable/disbale
+
+RFID txn consumer service:
+--------------------------
+https://starosta.atlassian.net/browse/MLFF-35
+https://starosta.atlassian.net/browse/MLFF-57
+
+
+Vehicle recognition transaction consumer service:
+-------------------------------------------------
+https://starosta.atlassian.net/browse/MLFF-39
+https://starosta.atlassian.net/browse/MLFF-72
+
+MLFF transaction pairing service:
+---------------------------------
+https://starosta.atlassian.net/browse/MLFF-41
+https://starosta.atlassian.net/browse/MLFF-166
+https://starosta.atlassian.net/browse/MLFF-126
+
+https://starosta.atlassian.net/browse/MLFF-146
+
+MLFF-63
+147
+
+
+Back office UI:
+---------------
+https://www.figma.com/proto/t034Vj2FjOqWwB6xiABmjy/MLFF-Back-Office-V2?page-id=0%3A1&type=design&node-id=139-865&viewport=340%2C237%2C0.09&scaling=min-zoom&starting-point-node-id=120%3A1965
+https://www.figma.com/proto/t034Vj2FjOqWwB6xiABmjy/MLFF-Back-Office-V2?page-id=0%3A1&type=design&node-id=139-1059&viewport=340%2C237%2C0.09&scaling=min-zoom&starting-point-node-id=120%3A2144&show-proto-sidebar=1
+
+Mobile App Flows:
+----------------
+https://www.figma.com/proto/x63QdlaZp9nbUwZM90xbGn/MLFF?page-id=0%3A1&type=design&node-id=27-199&viewport=33%2C-749%2C0.59&scaling=scale-down&starting-point-node-id=27%3A199&show-proto-sidebar=1
+
+
+Violation
+----------
+https://starosta.atlassian.net/browse/MLFF-18
+https://starosta.atlassian.net/browse/MLFF-165
+https://starosta.atlassian.net/browse/MLFF-155
+https://starosta.atlassian.net/browse/MLFF-152
+
+Fare Configuration & Calculation:
+---------------------------------
+https://starosta.atlassian.net/browse/MLFF-99
+
+Titan
+-----
+https://starosta.atlassian.net/browse/MLFF-148
+
+Team Task Tracker:
+------------------
+https://touchngocommy-my.sharepoint.com/:x:/g/personal/s012852_touchngo_com_my/EcYV6qgm4ehEv2kZlEagyVwBSnfqmFoYQAFhoE-Apm3z4w?e=E8v9yi&ovuser=4fcc219a-2a2a-4840-96f0-f6215dda5378%2CT141238%40touchngo.com.my&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzA2MDQwMTEzOCIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D
+
+Data Dictionary for MLFF Back Office Portal v1.0
+-------------------------------------------------
+https://touchngocommy.sharepoint.com/:x:/s/TechnologyDivision/EU8UyNGOAsdOuP2ozW4UPFgBEhLMNc1i6xhTrjM3NgkgPQ?e=fUO5sY&ovuser=4fcc219a-2a2a-4840-96f0-f6215dda5378%2CT141238%40touchngo.com.my&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzA2MDQwMTEzOCIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D
+
+
+Needs to revisit:
+-----------------
+https://starosta.atlassian.net/browse/MLFF-178
+https://starosta.atlassian.net/browse/MLFF-101
+https://starosta.atlassian.net/browse/MLFF-166
+
+Redis Sink Connector:
+---------------------
+https://starosta.atlassian.net/browse/MLFF-349
+https://starosta.atlassian.net/browse/MLFF-358
+
+Debezium Source Connector:
+--------------------------
+https://starosta.atlassian.net/browse/MLFF-342
+
+Reports:
+--------
+https://starosta.atlassian.net/browse/MLFF-525
+https://starosta.atlassian.net/browse/MLFF-439
+https://starosta.atlassian.net/browse/MLFF-443
+https://starosta.atlassian.net/browse/MLFF-445
+https://starosta.atlassian.net/browse/MLFF-451
+https://starosta.atlassian.net/browse/MLFF-522
+https://starosta.atlassian.net/browse/MLFF-423
+Acronym -> Sheet 7 and 8
+
+Additional Payment Gateway:
+---------------------------
+MLFF-423
+
+MLFF status Enable/Disable:
+--------------------------
+https://starosta.atlassian.net/browse/MLFF-339
+https://starosta.atlassian.net/browse/MLFF-282
+
+Email & Push-in Notification:
+-------------------
+https://starosta.atlassian.net/browse/MLFF-103
+https://starosta.atlassian.net/browse/MLFF-409
+
+Complete Request JSON exampe:
+-------------------------------
+MLFF-661
+MLFF-670
+
+Payment Processing:
+-------------------
+MLFF-493
+MLFF-513
+MLFF-628
+MLFF-581
+
+Balance Sheet:
+--------------
+https://starosta.atlassian.net/browse/MLFF-101
+https://starosta.atlassian.net/browse/MLFF-693
+https://starosta.atlassian.net/browse/MLFF-708
+
+PG Balance Sheet:
+-----------------
+https://starosta.atlassian.net/browse/MLFF-599
+https://starosta.atlassian.net/browse/MLFF-604
+https://starosta.atlassian.net/browse/MLFF-608

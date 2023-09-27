@@ -40,26 +40,10 @@ FROM (
         tt.t_type_desc AS tTypeDesc,
         '1' AS tTypeCategory,
         Count(*) AS totalTransactions,
-
-        Sum(Cast((CASE WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID', 'PENDING_ROP_PAID', 'ONHOLD_ROP_PAID') THEN (CASE WHEN tt.debit_credit = 'C' Then tc.fare * -1 ELSE tc.fare end)
-                       ELSE 0
-                   END
-        ) AS DECIMAL(12, 8)))
-        AS totalGross,
-
-        Sum(Cast((CASE WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID', 'PENDING_ROP_PAID', 'ONHOLD_ROP_PAID') THEN (CASE WHEN tt.debit_credit = 'C' then tc.commission * -1 ELSE tc.commission end)
-                       ELSE 0
-                  end) AS DECIMAL(12, 8)))
-        AS totalComm,
-
-        Sum(Cast((CASE WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID', 'PENDING_ROP_PAID', 'ONHOLD_ROP_PAID') THEN (CASE WHEN tt.debit_credit = 'C' then tc.gst * -1 ELSE tc.gst end)
-                       ELSE 0
-                   end) AS DECIMAL(12, 8)))
-        AS totalGst,
-
-        Sum(Cast((CASE WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID', 'PENDING_ROP_PAID', 'ONHOLD_ROP_PAID') THEN(CASE WHEN tt.debit_credit = 'C' then tc.net * -1 ELSE tc.net end)
-                       ELSE 0
-                  end) AS DECIMAL(12, 8)))
+        Sum(Cast((CASE WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID', 'PENDING_ROP_PAID', 'ONHOLD_ROP_PAID') THEN (CASE WHEN tt.debit_credit = 'C' Then tc.fare * -1 ELSE tc.fare end) ELSE 0 END) AS DECIMAL(12, 8))) AS totalGross,
+        Sum(Cast((CASE WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID', 'PENDING_ROP_PAID', 'ONHOLD_ROP_PAID') THEN (CASE WHEN tt.debit_credit = 'C' then tc.commission * -1 ELSE tc.commission end) ELSE 0 end) AS DECIMAL(12, 8))) AS totalComm,
+        Sum(Cast((CASE WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID', 'PENDING_ROP_PAID', 'ONHOLD_ROP_PAID') THEN (CASE WHEN tt.debit_credit = 'C' then tc.gst * -1 ELSE tc.gst end) ELSE 0 end) AS DECIMAL(12, 8))) AS totalGst,
+        Sum(Cast((CASE WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID', 'PENDING_ROP_PAID', 'ONHOLD_ROP_PAID') THEN(CASE WHEN tt.debit_credit = 'C' then tc.net * -1 ELSE tc.net end) ELSE 0 end) AS DECIMAL(12, 8))) AS totalNet
         AS totalNet
     FROM rpt_transactions t
     LEFT JOIN rpt_transaction_commissions tc ON tc.transaction_id_fk = t.transaction_id and tc.cut_off_date between  '2017-10-31 00:00:00' and  '2017-10-31 23:59:59'
