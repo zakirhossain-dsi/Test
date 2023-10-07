@@ -38,11 +38,11 @@ SELECT
     t.payment_id AS paymentID,
     null AS priority,
     orderItem.order_id_fk,
-    rptOrder.payment_option_if_fk,
-    CASE
-        WHEN rc.error_category = 'EXTERNAL' THEN '1'
-        WHEN rc.error_category = 'INTERNAL' THEN '2'
-        WHEN rc.error_category = 'SUCCESS' THEN '0'
+    rptOrder.payment_option_id_fk,
+    CASE error_category
+        WHEN 'EXTERNAL' THEN '1'
+        WHEN 'INTERNAL' THEN '2'
+        WHEN 'SUCCESS' THEN '0'
     END AS category
 FROM rpt_transactions t
 LEFT JOIN mlff_t_types tt ON tt.id = t.t_type_fk AND tt.deleted = false
@@ -58,4 +58,4 @@ WHERE t.posted_date BETWEEN :startDate AND :endDate
 AND t.cut_off_date BETWEEN :startDate AND :endDate
 AND t.transaction_status = 'PENDING'
 ORDER BY t.exit_timestamp, t.received_timestamp, t.posted_date
-LIMIT :limit OFFSET :offset;
+LIMIT :limit OFFSET :offset

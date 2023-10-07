@@ -5,11 +5,10 @@ SELECT
     tmp.paymentType,
     tmp.sourceOfFund,
     CASE
-        WHEN tmp.sourceOfFund IN ('ROP','EWALLET') THEN 'N'
-        WHEN (tmp.sourceOfFund= 'CALI' AND tmp.t_advancePayment='true') THEN 'Y'
-        WHEN tmp.sourceOfFund= 'CALI' AND (tmp.t_advancePayment IS NULL OR tmp.t_advancePayment= 'false') THEN 'N'
+        WHEN tmp.sourceOfFund = 'WA' THEN 'N'
+        WHEN tmp.t_advancePayment = 'true' THEN 'Y'
+        WHEN tmp.t_advancePayment IS NULL OR tmp.t_advancePayment = 'false' THEN 'N'
     END AS advancePayment,
-    tmp.sourceOfPayment,
     tmp.paymentId,
     tmp.paymentDatetime,
     tmp.status,
@@ -17,6 +16,7 @@ SELECT
     tmp.tTypeDesc,
     tmp.has_apportionment,
     tmp.fare,
+    0 AS interestCharge,
     CASE
         WHEN tmp.tType = 'BR' AND tmp.grossAmount <> 0 THEN tmp.grossAmount * -1
         ELSE tmp.grossAmount
@@ -116,6 +116,10 @@ SELECT
             CASE tmp.tType WHEN 'BR' AND tmp.commissionAmount <> 0 THEN tmp.commissionAmount * -1 ELSE tmp.commissionAmount END
         END
     ) AS commission_5,
+    tmp.orderId,
+    tmp.violationCode,
+    tmp.violationSubcode,
+    tmp.violationDescription
 FROM (
     SELECT
         CASE grp.id
@@ -132,8 +136,7 @@ FROM (
             appsec.description AS businessSector,
             t.payment_type AS paymentType,
             CASE
-                WHEN t.account_type = 'GOVERNMENT' AND t.account_sub_type = 'EXEMPTED' AND t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'PENDING', 'SUCCESS_ROP_PAID','PENDING_ROP_PAID','ONHOLD_ROP_PAID' ) THEN 'EXEMPTED'
-                WHEN t.source_of_fund ='EWALLET' AND t.actual_sof ='C' THEN 'CALI'
+                WHEN t.account_type = 'GOVERNMENT' AND t.account_sub_type = 'EXEMPTED' AND t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'PENDING', 'SUCCESS_ROP_PAID','PENDING_ROP_PAID','ONHOLD_ROP_PAID') THEN 'EXEMPTED'
                 ELSE t.source_of_fund
             END AS sourceOfFund,
             t.payment_id AS paymentId,
@@ -157,7 +160,7 @@ FROM (
                 WHEN FALSE THEN 'N'
             END AS has_apportionment,
             CASE t.has_apportionment
-                WHEN  FALSE THEN null
+                WHEN  FALSE THEN t.fare = null
                 ELSE t.fare
             END AS fare,
             tc.fare AS tcFare,
@@ -169,9 +172,8 @@ FROM (
             t.tag_serial_num AS deviceNo,
             t.vehicle_plate_num AS vehicleRegNo,
             t.advance_payment AS t_advancePayment,
-            t.source_of_payment AS sourceOfPayment,
             CASE
-                WHEN t.source_of_fund IN ('ROP','CAS') THEN t.account_no
+                WHEN t.source_of_fund IN ('CC','DD') THEN t.account_no
                 ELSE t.wallet_uuid
             END AS walletUUID,
             t.entry_sp_id AS entrySpId,
@@ -200,19 +202,27 @@ FROM (
             t.tran_amt AS amount,
             appt_sp.sp_name AS appt_sp_name,
             appt_sp.account_number AS appt_sp_acc_no,
-            t.vehicle_class_from_vector AS vehicleClass
+            t.vehicle_class_from_vector AS vehicleClass,
+            orderItem.order_id_fk AS orderId,
+            mvd.violation_code AS violationCode,
+            mvd.violation_subcode AS violationSubcode,
+            mvs.violation_description AS violationDescription
         FROM rpt_transactions t
-        LEFT JOIN mdt_t_types tt ON tt.id = t.t_type_fk AND tt.deleted = false
+        LEFT JOIN mlff_t_types tt ON tt.id = t.t_type_fk AND tt.deleted = false
         LEFT JOIN rpt_transaction_commissions tc ON tc.transaction_id_fk = t.transaction_id AND tc.cut_off_date = t.cut_off_date
-        LEFT JOIN mdt_service_providers appt_sp ON appt_sp.sp_id = tc.spid
-        LEFT JOIN mdt_service_providers sp ON sp.sp_id = t.exit_sp_id AND sp.deleted = false
-        LEFT JOIN mdt_service_providers esp ON esp.sp_id = t.entry_sp_id AND esp.deleted = false
-        LEFT JOIN mdt_app_sectors appsec ON sp.app_sector = appsec.code AND appsec.deleted = false
-        LEFT JOIN mdt_locations loc ON loc.sp_id = t.exit_sp_id AND loc.loc_id = t.exit_plaza_id AND loc.deleted = false
-        LEFT JOIN mdt_locations eloc on eloc.sp_id = t.entry_sp_id AND eloc.loc_id = t.entry_plaza_id AND eloc.deleted = false
-        LEFT JOIN mdt_response_codes rc ON rc.error_code_id = t.error_code_id AND t.response_code = rc.error_code_group
-        WHERE t.cut_off_date between $P{start_date} AND $P{end_date}
-        AND t.posted_date between  $P{start_date} AND  $P{end_date}
+        LEFT JOIN mlff_service_providers appt_sp ON appt_sp.sp_id = tc.spid
+        LEFT JOIN mlff_service_providers sp ON sp.sp_id = t.exit_sp_id AND sp.deleted = false
+        LEFT JOIN mlff_service_providers esp ON esp.sp_id = t.entry_sp_id AND esp.deleted = false
+        LEFT JOIN mlff_app_sectors appsec ON sp.app_sector = appsec.code AND appsec.deleted = false
+        LEFT JOIN mlff_locations loc ON loc.sp_id = t.exit_sp_id AND loc.loc_id = t.exit_plaza_id AND loc.deleted = false
+        LEFT JOIN mlff_locations eloc ON eloc.sp_id = t.entry_sp_id AND eloc.loc_id = t.entry_plaza_id AND eloc.deleted = false
+        LEFT JOIN mlff_response_codes rc ON rc.error_code_id = t.error_code_id AND t.response_code = rc.error_code_group
+        LEFT JOIN mlff_order_items orderItem ON orderItem.transaction_id_fk = t.id
+        LEFT JOIN rpt_violations rv on rv.mlff_transaction_id = t.id
+        LEFT JOIN mlff_violation_details mvd on mvd.violation_ref_id = rv.id
+        LEFT JOIN mlff_violation_subcode mvs on mvs.violation_subcode = mvd.violation_subcode
+        WHERE t.cut_off_date BETWEEN :startDate AND :endDate
+        AND t.posted_date BETWEEN :startDate AND :endDate
         AND t.transaction_status NOT IN ('ONHOLD','REJECT')
         UNION
         SELECT
@@ -222,19 +232,12 @@ FROM (
             appsec.description AS businessSector,
             t.payment_type AS paymentType,
             CASE
-                WHEN t.account_type = 'GOVERNMENT' AND t.account_sub_type = 'EXEMPTED' AND t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'PENDING','SUCCESS_ROP_PAID','PENDING_ROP_PAID','ONHOLD_ROP_PAID') THEN 'EXEMPTED'
-                WHEN t.source_of_fund ='EWALLET' THEN 'CALI'
+                WHEN t.account_type = 'GOVERNMENT' AND t.account_sub_type = 'EXEMPTED' AND t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'PENDING', 'SUCCESS_ROP_PAID','PENDING_ROP_PAID','ONHOLD_ROP_PAID') THEN 'EXEMPTED'
                 WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'PENDING', 'SUCCESS_ROP_PAID','PENDING_ROP_PAID','ONHOLD_ROP_PAID') THEN t.source_of_fund
                 ELSE NULL
             END AS sourceOfFund,
-            CASE
-                WHEN t.source_of_fund = 'ROP' AND t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID','SUCCESS_ROP_PAID','PENDING_ROP_PAID','ONHOLD_ROP_PAID') THEN t.payment_id
-                ELSE NULL
-            END AS paymentId,
-            CASE
-                WHEN t.source_of_fund = 'ROP' AND t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID','PENDING_ROP_PAID','ONHOLD_ROP_PAID') THEN t.payment_datetime
-                ELSE NULL
-            END AS paymentDatetime,
+            t.payment_id AS paymentId,
+            t.payment_datetime AS paymentDatetime,
             CASE
                 WHEN t.transaction_status = 'ONHOLD' THEN 'On-Hold'
                 WHEN t.transaction_status = 'REJECT' THEN 'Non-Payable'
@@ -258,9 +261,8 @@ FROM (
             t.tag_serial_num AS deviceNo,
             t.vehicle_plate_num AS vehicleRegNo,
             t.advance_payment AS t_advancePayment,
-            t.source_of_payment AS sourceOfPayment,
             CASE
-                WHEN  t.source_of_fund IN ('ROP','CAS') THEN t.account_no
+                WHEN t.source_of_fund IN ('CC','DD') THEN t.account_no
                 ELSE t.wallet_uuid
             END AS walletUUID,
             t.entry_sp_id AS entrySpId,
@@ -289,18 +291,25 @@ FROM (
             t.tran_amt AS amount,
             sp.sp_name AS appt_sp_name,
             sp.account_number AS appt_sp_acc_no,
-            t.vehicle_class_from_vector AS vehicleClass
+            t.vehicle_class_from_vector AS vehicleClass,
+            '' AS orderId,
+            mvd.violation_code AS violationCode,
+            mvd.violation_subcode AS violationSubcode,
+            mvs.violation_description AS violationDescription
         FROM rpt_transactions t
-        LEFT JOIN mdt_t_types tt ON tt.id = t.t_type_fk AND tt.deleted = false
+        LEFT JOIN mlff_t_types tt ON tt.id = t.t_type_fk AND tt.deleted = false
         LEFT JOIN rpt_transaction_commissions tc ON tc.transaction_id_fk = t.transaction_id AND tc.cut_off_date = t.cut_off_date
-        LEFT JOIN mdt_service_providers sp ON sp.sp_id = t.exit_sp_id AND sp.deleted = false
-        LEFT JOIN mdt_service_providers esp ON esp.sp_id = t.entry_sp_id AND esp.deleted = false
-        LEFT JOIN mdt_app_sectors appsec ON sp.app_sector = appsec.code AND appsec.deleted = false
-        LEFT JOIN mdt_locations loc ON loc.sp_id = t.exit_sp_id AND loc.loc_id = t.exit_plaza_id AND loc.deleted = false
-        LEFT JOIN mdt_locations eloc on eloc.sp_id = t.entry_sp_id AND eloc.loc_id = t.entry_plaza_id AND eloc.deleted = false
-        LEFT JOIN mdt_response_codes rc ON rc.error_code_id = t.error_code_id AND t.response_code = rc.error_code_group
-        WHERE t.cut_off_date between $P{start_date} AND $P{end_date}
-        AND t.posted_date between  $P{start_date} AND  $P{end_date}
+        LEFT JOIN mlff_service_providers sp ON sp.sp_id = t.exit_sp_id AND sp.deleted = false
+        LEFT JOIN mlff_service_providers esp ON esp.sp_id = t.entry_sp_id AND esp.deleted = false
+        LEFT JOIN mlff_app_sectors appsec ON sp.app_sector = appsec.code AND appsec.deleted = false
+        LEFT JOIN mlff_locations loc ON loc.sp_id = t.exit_sp_id AND loc.loc_id = t.exit_plaza_id AND loc.deleted = false
+        LEFT JOIN mlff_locations eloc ON eloc.sp_id = t.entry_sp_id AND eloc.loc_id = t.entry_plaza_id AND eloc.deleted = false
+        LEFT JOIN mlff_response_codes rc ON rc.error_code_id = t.error_code_id AND t.response_code = rc.error_code_group
+        LEFT JOIN rpt_violations rv on rv.mlff_transaction_id = t.id
+        LEFT JOIN mlff_violation_details mvd on mvd.violation_ref_id = rv.id
+        LEFT JOIN mlff_violation_subcode mvs on mvs.violation_subcode = mvd.violation_subcode
+        WHERE t.cut_off_date BETWEEN :startDate AND :endDate
+        AND t.posted_date BETWEEN :startDate AND :endDate
         AND t.transaction_status IN ('ONHOLD','REJECT')
     ) AS grp,
     (SELECT @row_number := 0, @id := '') r
@@ -308,3 +317,4 @@ FROM (
 ) AS tmp
 GROUP BY tmp.id
 ORDER BY tmp.tpmsReceivedDate, tmp.postedDate, tmp.businessSector, tmp.exitSpId, tmp.exitLocationId, tmp.status, tmp.tType
+LIMIT :limit OFFSET :offset;

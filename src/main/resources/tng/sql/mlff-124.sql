@@ -12,26 +12,24 @@ FROM (
         '' AS locAcc,
         '' AS locName,
         CASE
-            WHEN t.source_of_fund= 'EWALLET' THEN 'CALI'
+            WHEN t.source_of_fund= 'WA' THEN 'CALI'
             ELSE t.source_of_fund
         END AS sourceOfPayment,
         CASE
-            WHEN t.source_of_fund ='ROP' THEN t.source_of_fund
-            WHEN t.source_of_fund ='EWALLET' THEN 'TNGD'
+            WHEN t.source_of_fund ='WA' THEN 'TNGD'
+            ELSE t.source_of_fund
             END AS sourceOfPayment1,
-        CASE
-            WHEN t.transaction_status = 'SUCCESS' THEN 'Payable'
-            WHEN t.transaction_status = 'REJECT' THEN 'Non-Payable'
-            WHEN t.transaction_status = 'ONHOLD_PAID' THEN 'On-Hold Paid'
-            WHEN t.transaction_status = 'PENDING_PAID' THEN 'Pending Paid'
-            WHEN t.transaction_status = 'ONHOLD' THEN 'On-Hold'
-            WHEN t.transaction_status = 'PENDING' THEN 'Pending'
-            WHEN t.transaction_status = 'SUCCESS_ROP_PAID' THEN 'Success ROP Paid'
-            WHEN t.transaction_status = 'SUCCESS_ROP_UNPAID' THEN 'Success ROP Unpaid'
-            WHEN t.transaction_status = 'PENDING_ROP_UNPAID' THEN 'Pending ROP Unpaid'
-            WHEN t.transaction_status = 'PENDING_ROP_PAID' THEN 'Pending ROP Paid'
-            WHEN t.transaction_status = 'ONHOLD_ROP_UNPAID' THEN 'Onhold ROP Unpaid'
-            WHEN t.transaction_status = 'ONHOLD_ROP_PAID' THEN 'Onhold ROP Paid'
+        CASE t.transaction_status
+            WHEN 'SUCCESS' THEN 'Payable'
+            WHEN 'ONHOLD_PAID' THEN 'On-Hold Paid'
+            WHEN 'PENDING_PAID' THEN 'Pending Paid'
+            WHEN 'PENDING' THEN 'Pending'
+            WHEN 'SUCCESS_ROP_PAID' THEN 'Success ROP Paid'
+            WHEN 'SUCCESS_ROP_UNPAID' THEN 'Success ROP Unpaid'
+            WHEN 'PENDING_ROP_UNPAID' THEN 'Pending ROP Unpaid'
+            WHEN 'PENDING_ROP_PAID' THEN 'Pending ROP Paid'
+            WHEN 'ONHOLD_ROP_UNPAID' THEN 'Onhold ROP Unpaid'
+            WHEN 'ONHOLD_ROP_PAID' THEN 'Onhold ROP Paid'
         END AS status,
         tt.t_type AS tType,
         tt.debit_credit AS debitOrCredit,
@@ -44,9 +42,9 @@ FROM (
         Sum(Cast((CASE WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'SUCCESS_ROP_PAID', 'PENDING_ROP_PAID', 'ONHOLD_ROP_PAID') THEN(CASE WHEN tt.debit_credit = 'C' THEN tc.net * -1 ELSE tc.net END) ELSE 0 END) AS DECIMAL(12, 5))) AS totalNet
     FROM rpt_transactions t
     LEFT JOIN rpt_transaction_commissions tc ON tc.transaction_id_fk = t.transaction_id AND tc.cut_off_date BETWEEN :startDate AND :endDate
-    LEFT JOIN mdt_service_providers sp ON sp.sp_id = tc.spid AND sp.deleted = false AND sp.deleted = false
-    LEFT JOIN mdt_app_sectors appsec ON sp.app_sector = appsec.code AND sp.deleted = false
-    LEFT JOIN mdt_t_types tt ON tt.id = t.t_type_fk
+    LEFT JOIN mlff_service_providers sp ON sp.sp_id = tc.spid AND sp.deleted = false AND sp.deleted = false
+    LEFT JOIN mlff_app_sectors appsec ON sp.app_sector = appsec.code AND sp.deleted = false
+    LEFT JOIN mlff_t_types tt ON tt.id = t.t_type_fk
     WHERE t.posted_date BETWEEN  :startDate AND  :endDate
     AND t.cut_off_date BETWEEN  :startDate AND  :endDate
     AND t.transaction_status NOT IN ('ONHOLD', 'REJECT')
@@ -62,27 +60,15 @@ FROM (
         '' AS locName,
         '' AS locAcc,
         '' AS locId,
-        CASE
-            WHEN t.source_of_fund= 'EWALLET' THEN 'CALI'
-        ELSE t.source_of_fund
+        CASE t.source_of_fund
+            WHEN 'WA' THEN 'CALI' ELSE t.source_of_fund
         END AS sourceOfPayment,
-        CASE
-            WHEN t.source_of_fund ='ROP' THEN t.source_of_fund
-            WHEN t.source_of_fund ='EWALLET' THEN 'TNGD'
+        CASE t.source_of_fund
+            WHEN 'WA' THEN 'TNGD' ELSE t.source_of_fund
         END AS sourceOfPayment1,
-        CASE
-            WHEN t.transaction_status = 'SUCCESS' THEN 'Payable'
-            WHEN t.transaction_status = 'REJECT' THEN 'Non-Payable'
-            WHEN t.transaction_status = 'ONHOLD_PAID' THEN 'On-Hold Paid'
-            WHEN t.transaction_status = 'PENDING_PAID' THEN 'Pending Paid'
-            WHEN t.transaction_status = 'ONHOLD' THEN 'On-Hold'
-            WHEN t.transaction_status = 'PENDING' THEN 'Pending'
-            WHEN t.transaction_status = 'SUCCESS_ROP_PAID' THEN 'Success ROP Paid'
-            WHEN t.transaction_status = 'SUCCESS_ROP_UNPAID' THEN 'Success ROP Unpaid'
-            WHEN t.transaction_status = 'PENDING_ROP_UNPAID' THEN 'Pending ROP Unpaid'
-            WHEN t.transaction_status = 'PENDING_ROP_PAID' THEN 'Pending ROP Paid'
-            WHEN t.transaction_status = 'ONHOLD_ROP_UNPAID' THEN 'Onhold ROP Unpaid'
-            WHEN t.transaction_status = 'ONHOLD_ROP_PAID' THEN 'Onhold ROP Paid'
+        CASE t.transaction_status
+            WHEN 'ONHOLD' THEN 'On-Hold'
+            WHEN 'REJECT' THEN 'Non-Payable'
         END AS status,
         tt.t_type AS tType,
         tt.debit_credit AS debitOrCredit,
@@ -94,21 +80,21 @@ FROM (
         0 AS totalGst,
         0 AS totalNet
     FROM rpt_transactions t
-    LEFT JOIN mdt_service_providers sp ON sp.sp_id = t.exit_sp_id AND sp.deleted = false
-    LEFT JOIN mdt_app_sectors appsec ON sp.app_sector = appsec.code AND sp.deleted = false
-    LEFT JOIN mdt_t_types tt ON tt.id = t.t_type_fk
+    LEFT JOIN mlff_service_providers sp ON sp.sp_id = t.exit_sp_id AND sp.deleted = false
+    LEFT JOIN mlff_app_sectors appsec ON sp.app_sector = appsec.code AND sp.deleted = false
+    LEFT JOIN mlff_t_types tt ON tt.id = t.t_type_fk
     WHERE t.posted_date BETWEEN  :startDate AND  :endDate
     AND t.cut_off_date BETWEEN  :startDate AND  :endDate
     AND t.transaction_status IN ('ONHOLD', 'REJECT')
     GROUP BY sp.sp_id, DATE(t.posted_date), t.transaction_status, tt.id, sourceOfPayment
 ) x
 ORDER BY x.postedDate, x.spId,
-CASE
-    WHEN x.status = 'Payable' THEN 1
-    WHEN x.status = 'Pending Paid' THEN 2
-    WHEN x.status = 'On-Hold Paid' THEN 3
-    WHEN x.status = 'Pending' THEN 4
-    WHEN x.status = 'On-Hold' THEN 5
-    WHEN x.status = 'Non-Payable' THEN 6
+CASE x.status
+    WHEN 'Payable' THEN 1
+    WHEN 'Pending Paid' THEN 2
+    WHEN 'On-Hold Paid' THEN 3
+    WHEN 'Pending' THEN 4
+    WHEN 'On-Hold' THEN 5
+    WHEN 'Non-Payable' THEN 6
 END ASC
-LIMIT :limit OFFSET :offset;
+LIMIT :limit OFFSET :offset
