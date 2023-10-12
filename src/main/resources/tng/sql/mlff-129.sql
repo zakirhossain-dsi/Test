@@ -117,6 +117,8 @@ SELECT
         END
     ) AS commission_5,
     tmp.orderId,
+    tmp.paymentOptionName,
+    tmp.paymentMethod,
     tmp.violationCode,
     tmp.violationSubcode,
     tmp.violationDescription
@@ -204,6 +206,8 @@ FROM (
             appt_sp.account_number AS appt_sp_acc_no,
             t.vehicle_class_from_vector AS vehicleClass,
             orderItem.order_id_fk AS orderId,
+            mlffOrder.payment_option_name AS paymentOptionName,
+            mlffOrder.payment_method AS paymentMethod,
             mvd.violation_code AS violationCode,
             mvd.violation_subcode AS violationSubcode,
             mvs.violation_description AS violationDescription
@@ -218,6 +222,7 @@ FROM (
         LEFT JOIN mlff_locations eloc ON eloc.sp_id = t.entry_sp_id AND eloc.loc_id = t.entry_plaza_id AND eloc.deleted = false
         LEFT JOIN mlff_response_codes rc ON rc.error_code_id = t.error_code_id AND t.response_code = rc.error_code_group
         LEFT JOIN mlff_order_items orderItem ON orderItem.transaction_id_fk = t.id
+        LEFT JOIN rpt_orders mlffOrder ON mlffOrder.id = orderItem.order_id_fk
         LEFT JOIN rpt_violations rv on rv.mlff_transaction_id = t.id
         LEFT JOIN mlff_violation_details mvd on mvd.violation_ref_id = rv.id
         LEFT JOIN mlff_violation_subcode mvs on mvs.violation_subcode = mvd.violation_subcode
@@ -293,6 +298,8 @@ FROM (
             sp.account_number AS appt_sp_acc_no,
             t.vehicle_class_from_vector AS vehicleClass,
             '' AS orderId,
+            '' AS paymentOptionName
+            '' AS paymentMethod
             mvd.violation_code AS violationCode,
             mvd.violation_subcode AS violationSubcode,
             mvs.violation_description AS violationDescription

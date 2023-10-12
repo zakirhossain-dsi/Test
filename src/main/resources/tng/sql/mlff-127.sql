@@ -39,11 +39,17 @@ SELECT
     null AS priority,
     orderItem.order_id_fk,
     rptOrder.payment_option_id_fk,
+    rptOrder.payment_option_name,
+    reptOrder.payment_method,
     CASE error_category
         WHEN 'EXTERNAL' THEN '1'
         WHEN 'INTERNAL' THEN '2'
         WHEN 'SUCCESS' THEN '0'
-    END AS category
+    END AS category,
+    CASE
+        WHEN t.source_of_fund IN ('CC','DD') THEN t.account_no
+        ELSE t.wallet_uuid
+    END AS walletUUID,
 FROM rpt_transactions t
 LEFT JOIN mlff_t_types tt ON tt.id = t.t_type_fk AND tt.deleted = false
 LEFT JOIN mlff_t_type_groups ttg ON ttg.id = tt.t_type_group_id_fk AND ttg.deleted = false

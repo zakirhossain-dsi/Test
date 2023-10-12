@@ -15,7 +15,7 @@ BEGIN
     FROM mlff_transactions
     WHERE DATE(created_date) = postedDate AND deleted = false;
 
-    INSERT INTO rpt_transaction_commissions (cut_off_date, commission, created_date, fare, gst, id, net, original_fare, spid, transaction_id_fk)
+    INSERT INTO rpt_transaction_commissions (cut_off_date, commission, created_date, fare, gst, transaction_commission_id, net, original_fare, spid, transaction_id_fk)
     SELECT postedDate, tc.commission, sysdate(), tc.fare, tc.gst, tc.id, tc.net, tc.original_fare, tc.spid, tc.transaction_id_fk
     FROM mlff_transaction_commissions tc
     INNER JOIN mlff_transactions t ON t.id = tc.transaction_id_fk AND t.deleted = false
@@ -31,8 +31,8 @@ BEGIN
     FROM mlff_vehicle_recognition
     WHERE deleted = false AND date(created_date) = postedDate;
 
-    INSERT INTO rpt_orders (cut_off_date, acquirement_id, cashier_request_id, created_date, credit_finish_time, id, invocation_count, merchant_trans_id, mx_account_id, notify_url, order_amount, order_number, order_status, order_title, order_type, payment_option_id_fk, payment_type, req_created_time, request_end, request_start, request_text, resp_created_time, result_code, result_code_id, result_msg, result_status, retry_count, sof_id_fk, tag_serial_number, user_id)
-    SELECT postedDate, acquirement_id, cashier_request_id, sysdate(), credit_finish_time, id, invocation_count, merchant_trans_id, mx_account_id, notify_url, order_amount, order_number, order_status, order_title, order_type, payment_option_id_fk, payment_type, req_created_time, request_end, request_start, request_text, resp_created_time, result_code, result_code_id, result_msg, result_status, retry_count, sof_id_fk, tag_serial_number, user_id
+    INSERT INTO rpt_orders (cut_off_date, acquirement_id, cashier_request_id, created_date, credit_finish_time, id, invocation_count, merchant_trans_id, mx_account_id, notify_url, order_amount, order_number, order_status, order_title, order_type, payment_option_id_fk, payment_option_name, payment_method, payment_type, req_created_time, request_end, request_start, request_text, resp_created_time, result_code, result_code_id, result_msg, result_status, retry_count, sof_id_fk, tag_serial_number, user_id)
+    SELECT postedDate, acquirement_id, cashier_request_id, sysdate(), credit_finish_time, id, invocation_count, merchant_trans_id, mx_account_id, notify_url, order_amount, order_number, order_status, order_title, order_type, payment_option_id_fk, payment_option_name, payment_method, payment_type, req_created_time, request_end, request_start, request_text, resp_created_time, result_code, result_code_id, result_msg, result_status, retry_count, sof_id_fk, tag_serial_number, user_id
     FROM mlff_orders
     WHERE deleted = false AND date(created_date) = postedDate;
 

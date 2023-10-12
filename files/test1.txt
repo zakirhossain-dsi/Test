@@ -1,1 +1,130 @@
-Text 1
+$ ls -las
+total 32
+ 4 drwxr-xr-x 1 HP 197121 0 Oct  5 15:19 ./
+12 drwxr-xr-x 1 HP 197121 0 Aug 25 10:23 ../
+ 4 drwxr-xr-x 1 HP 197121 0 Oct  5 15:20 mlff-config-service/
+ 4 drwxr-xr-x 1 HP 197121 0 Aug 25 10:28 mlff-payment-notification-service/
+ 4 drwxr-xr-x 1 HP 197121 0 Aug 28 10:48 mlff-txn-payment-service/
+ 4 drwxr-xr-x 1 HP 197121 0 Oct  4 15:21 mlff-txn-query-service/
+
+   4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-add-balance-sheet-service/
+  0 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-adv-payment-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-api-proxy-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-clear-rop-status-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  4  2023 rfid-config-service/
+  0 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-fare-api-service/
+  4 drwxr-xr-x 1 HP 197121      0 Jun 26 18:45 rfid-fare-management-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-fare-upload-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-gp-post-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-log-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-master-data-service/
+  0 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-masterdb-open-api/
+  0 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-masterdb-query-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-mock-wallet/
+  0 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-open-api-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-order-query-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-payment-notification-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-registration-api-service/
+  0 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-registration-web/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-registry-service/
+  4 drwxr-xr-x 1 HP 197121      0 Jul 27 15:53 rfid-report-service/
+  0 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-shell-refuel-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-tag-status-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-tier-commission-processor-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-txn-consumer-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-txn-payment-service/
+  4 drwxr-xr-x 1 HP 197121      0 Jun 22 16:47 rfid-txn-processor-service/
+692 -rw-r--r-- 1 HP 197121 705004 Jul 24 20:43 rfid-txn-processor-service.zip
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-txn-response-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-txn-retry-service/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-txn-simulator/
+  4 drwxr-xr-x 1 HP 197121      0 Mar  2  2023 rfid-vector-tag-status-service/
+
+ 4 drwxr-xr-x 1 HP 197121 0 Apr  7  2023 ./
+12 drwxr-xr-x 1 HP 197121 0 Aug 25 10:23 ../
+ 4 drwxr-xr-x 1 HP 197121 0 Apr  7  2023 cybersource-query-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 22 11:27 rop-balance-sheet-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 22 11:32 rop-config-service/
+ 4 drwxr-xr-x 1 HP 197121 0 Apr 10 10:42 rop-gp-post-service/
+ 4 drwxr-xr-x 1 HP 197121 0 Apr 11 14:53 rop-log-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 22 10:09 rop-payment-cs-service/
+ 4 drwxr-xr-x 1 HP 197121 0 Apr  7  2023 rop-payment-listner-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 11 11:18 rop-payment-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 29 11:26 rop-pending-txn-service/
+ 4 drwxr-xr-x 1 HP 197121 0 Jun 12 11:44 rop-query-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 12 15:20 rop-registry-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 29 15:28 rop-report-service/
+ 4 drwxr-xr-x 1 HP 197121 0 Apr 12 09:38 rop-system-error-handle-service/
+
+
+ 4 drwxr-xr-x 1 HP 197121 0 Jun 29 19:00 abt-common-utils/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  2  2023 abt-email-service/
+
+
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:39 titan-account-management-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 24 15:39 titan-config-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 24 15:39 titan-crmlite-api-gateway-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 24 15:39 titan-crmlite-auth-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 24 15:39 titan-crmlite-config-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:39 titan-crmlite-log-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:39 titan-crmlite-master-data-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-crmlite-registry-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-crmlite-report-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-crmlite-web-app/
+ 4 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-ewallet-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-ewallet-ws/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-exempted-account-service/
+ 4 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-fitment-channel-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-log-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-master-db-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-open-api-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-post-txn-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-product-management-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-query-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-registry-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-report-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-request-process-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-rfid-order-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:40 titan-sp-management-service/
+ 0 drwxr-xr-x 1 HP 197121 0 May 24 15:41 titan-web-app/
+
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-apigateway/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-authentication/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-case/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-config/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-eureka/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-log/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-masterdata/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-proxy/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-query/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-report/
+12 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-crs-web/
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-authentication/
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-case/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-config/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-eureka/
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-log/
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-masterdata/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-open-api/
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-proxy/
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-query/
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-report/
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-irs-web/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-rfid-api/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-rfid-api-gateway/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-rfid-bulkupload/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-rfid-data-generator/
+ 0 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-rfid-open-api/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tng-rfid-web/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-camtag-consumers/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-camwallet-consumers/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-ewallet-consumers/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-tag-consumers/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-tagack-consumers/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-tagerror-sender/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-txn-consumers/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-txn-preprocessing/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-txn-sender/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-txnresponse-consumers/
+ 4 drwxr-xr-x 1 HP 197121 0 Mar  8  2023 tngrfid-txntpmsresponse-consumers/
+
