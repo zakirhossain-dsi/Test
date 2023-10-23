@@ -42,7 +42,8 @@ public class TestTime extends TestCase {
 
     @Test
     public void testExtractDatePattern(){
-        String originalString = "reportSpId MLFF Daily Toll Transactions Details Report - MM-yyyy.xlxs";
+        String originalString = "reportSpId MLFF Daily Toll Transactions Details Report - MM-yyyy";
+        // String originalString = "MLFF Daily Violation Details Report - yyyy-MM-dd-HH-mm-ss";
 
         Pattern fileNamePattern = Pattern.compile("(reportSpId)?.+ ((dd-)?MM-yyyy)?");
         Matcher matcher = fileNamePattern.matcher(originalString);

@@ -1,8 +1,8 @@
 SELECT
     t.transaction_id,
-    date_format(t.exit_timestamp, '%d-%m-%Y-%T') AS tranDateTime,
-    date_format(t.received_timestamp, '%d-%m-%Y-%T') AS receivedDate,
-    date_format(t.posted_date, '%d-%m-%Y-%T') AS postedDate,
+    t.exit_timestamp,
+    t.received_timestamp,
+    t.posted_date,
     t.serial_num AS tranSerialNum,
     t.exit_sp_id AS exitSpId,
     t.exit_plaza_id AS exitLocationID,
@@ -33,14 +33,14 @@ SELECT
     t.error_description AS reasonDescription,
     t.payment_type AS paymentType,
     t.source_of_fund AS sourceOfPayment,
-    date_format(t.posted_date, '%d-%m-%Y-%T') AS paymentResponseTime,
+    t.posted_date,
     t.source_of_fund AS sourceOfPaymentUUID,
-    t.payment_id AS paymentID,
+    paymentRequest.payment_id AS paymentID,
     null AS priority,
     orderItem.order_id_fk,
     rptOrder.payment_option_id_fk,
     rptOrder.payment_option_name,
-    reptOrder.payment_method,
+    paymentRequest.payment_method,
     CASE error_category
         WHEN 'EXTERNAL' THEN '1'
         WHEN 'INTERNAL' THEN '2'
@@ -49,7 +49,7 @@ SELECT
     CASE
         WHEN t.source_of_fund IN ('CC','DD') THEN t.account_no
         ELSE t.wallet_uuid
-    END AS walletUUID,
+    END AS walletUUID
 FROM rpt_transactions t
 LEFT JOIN mlff_t_types tt ON tt.id = t.t_type_fk AND tt.deleted = false
 LEFT JOIN mlff_t_type_groups ttg ON ttg.id = tt.t_type_group_id_fk AND ttg.deleted = false
@@ -60,8 +60,9 @@ LEFT JOIN mlff_locations exitLocation ON exitLocation.loc_id = t.exit_plaza_id
 LEFT JOIN mlff_response_codes rc ON rc.error_code_id = t.error_code_id AND t.response_code = rc.error_code_group
 LEFT JOIN mlff_order_items orderItem ON orderItem.transaction_id_fk = t.id
 LEFT JOIN rpt_orders rptOrder ON rptOrder.id = orderItem.order_id_fk
+LEFT JOIN mlff_payment_request paymentRequest ON paymentRequest.order_number = rptOrder.order_number
 WHERE t.posted_date BETWEEN :startDate AND :endDate
 AND t.cut_off_date BETWEEN :startDate AND :endDate
 AND t.transaction_status = 'PENDING'
 ORDER BY t.exit_timestamp, t.received_timestamp, t.posted_date
-LIMIT :limit OFFSET :offset
+LIMIT :limit OFFSET :offset;

@@ -116,7 +116,7 @@ SELECT
             CASE tmp.tType WHEN 'BR' AND tmp.commissionAmount <> 0 THEN tmp.commissionAmount * -1 ELSE tmp.commissionAmount END
         END
     ) AS commission_5,
-    tmp.orderId,
+    tmp.orderNumber,
     tmp.paymentOptionName,
     tmp.paymentMethod,
     tmp.violationCode,
@@ -134,14 +134,14 @@ FROM (
         SELECT
             tc.id AS commId,
             t.transaction_id AS id,
-            t.posted_date AS postedDate,
+            date_format(t.posted_date, '%d-%m-%Y') AS postedDate,
             appsec.description AS businessSector,
             t.payment_type AS paymentType,
             CASE
                 WHEN t.account_type = 'GOVERNMENT' AND t.account_sub_type = 'EXEMPTED' AND t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'PENDING', 'SUCCESS_ROP_PAID','PENDING_ROP_PAID','ONHOLD_ROP_PAID') THEN 'EXEMPTED'
                 ELSE t.source_of_fund
             END AS sourceOfFund,
-            t.payment_id AS paymentId,
+            paymentRequest.payment_id AS paymentId,
             t.payment_datetime AS paymentDatetime,
             CASE t.transaction_status
                 WHEN 'SUCCESS' THEN 'Payable'
@@ -205,9 +205,9 @@ FROM (
             appt_sp.sp_name AS appt_sp_name,
             appt_sp.account_number AS appt_sp_acc_no,
             t.vehicle_class_from_vector AS vehicleClass,
-            orderItem.order_id_fk AS orderId,
-            mlffOrder.payment_option_name AS paymentOptionName,
-            mlffOrder.payment_method AS paymentMethod,
+            rptOrder.order_number AS orderNumber,
+            rptOrder.payment_option_name AS paymentOptionName,
+            paymentRequest.payment_method AS paymentMethod,
             mvd.violation_code AS violationCode,
             mvd.violation_subcode AS violationSubcode,
             mvs.violation_description AS violationDescription
@@ -222,7 +222,8 @@ FROM (
         LEFT JOIN mlff_locations eloc ON eloc.sp_id = t.entry_sp_id AND eloc.loc_id = t.entry_plaza_id AND eloc.deleted = false
         LEFT JOIN mlff_response_codes rc ON rc.error_code_id = t.error_code_id AND t.response_code = rc.error_code_group
         LEFT JOIN mlff_order_items orderItem ON orderItem.transaction_id_fk = t.id
-        LEFT JOIN rpt_orders mlffOrder ON mlffOrder.id = orderItem.order_id_fk
+        LEFT JOIN rpt_orders rptOrder ON rptOrder.id = orderItem.order_id_fk
+        LEFT JOIN mlff_payment_request paymentRequest ON paymentRequest.order_number = rptOrder.order_number
         LEFT JOIN rpt_violations rv on rv.mlff_transaction_id = t.id
         LEFT JOIN mlff_violation_details mvd on mvd.violation_ref_id = rv.id
         LEFT JOIN mlff_violation_subcode mvs on mvs.violation_subcode = mvd.violation_subcode
@@ -233,7 +234,7 @@ FROM (
         SELECT
             tc.id AS commId,
             t.transaction_id AS id,
-            t.posted_date AS postedDate,
+            date_format(t.posted_date, '%d-%m-%Y') AS postedDate,
             appsec.description AS businessSector,
             t.payment_type AS paymentType,
             CASE
@@ -241,7 +242,7 @@ FROM (
                 WHEN t.transaction_status IN ('SUCCESS', 'ONHOLD_PAID', 'PENDING_PAID', 'PENDING', 'SUCCESS_ROP_PAID','PENDING_ROP_PAID','ONHOLD_ROP_PAID') THEN t.source_of_fund
                 ELSE NULL
             END AS sourceOfFund,
-            t.payment_id AS paymentId,
+            '' AS paymentId,
             t.payment_datetime AS paymentDatetime,
             CASE
                 WHEN t.transaction_status = 'ONHOLD' THEN 'On-Hold'
@@ -297,9 +298,9 @@ FROM (
             sp.sp_name AS appt_sp_name,
             sp.account_number AS appt_sp_acc_no,
             t.vehicle_class_from_vector AS vehicleClass,
-            '' AS orderId,
-            '' AS paymentOptionName
-            '' AS paymentMethod
+            '' AS orderNumber,
+            '' AS paymentOptionName,
+            '' AS paymentMethod,
             mvd.violation_code AS violationCode,
             mvd.violation_subcode AS violationSubcode,
             mvs.violation_description AS violationDescription

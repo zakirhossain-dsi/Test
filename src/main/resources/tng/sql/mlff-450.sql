@@ -3,16 +3,16 @@ SELECT
     exitSP.account_number AS exitSpAccountNo,
     t.tag_serial_num,
     t.vehicle_plate_num,
-    t.payment_id,
-    t.source_of_fund AS sourceOfFund,
-     mlffOrder.payment_option_name,
+    paymentRequest.payment_id,
+    paymentRequest.payment_method AS sourceOfFund,
+     rptOrder.payment_option_name,
     CASE
         WHEN  t.source_of_fund in ('CC','DD') THEN    t.account_no
         ELSE t.wallet_uuid
     END AS walletUUID,
     t.tc_serial_num,
     t.serial_num,
-    mlffOrder.order_number,
+    rptOrder.order_number,
     t.id AS tranId,
     t.entry_timestamp,
     t.exit_timestamp,
@@ -53,7 +53,8 @@ LEFT JOIN mlff_service_providers exitSP ON exitSP.sp_id = t.exit_sp_id AND exitS
 LEFT JOIN mlff_locations exitLoc ON exitLoc.loc_id = t.exit_plaza_id AND exitLoc.deleted = false
 LEFT JOIN mlff_app_sectors appsec ON exitSP.app_sector = appsec.code AND appsec.deleted = false
 LEFT join mlff_order_items orderItem ON orderitem.transaction_id_fk = t.id
-LEFT join rpt_orders mlffOrder ON mlffOrder.id = orderitem.order_id_fk
+LEFT join rpt_orders rptOrder ON rptOrder.id = orderitem.order_id_fk
+LEFT JOIN mlff_payment_request paymentRequest ON paymentRequest.order_number = rptOrder.order_number
 WHERE t.posted_date BETWEEN :startDate AND :endDate
 AND t.cut_off_date BETWEEN :startDate AND :endDate
 AND t.transaction_status = 'PENDING'

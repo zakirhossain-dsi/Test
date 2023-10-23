@@ -1,0 +1,22 @@
+TransactionType=SALE 
+PymtMethod =CC 
+ServiceID =sit 
+PaymentID =20230731093035000007 
+OrderNumber =P2023073109303500007 
+Amount =3.00 
+CurrencyCode =MYR 
+HashValue =8abcd7af22e09ab08e2c73d3c19995f3d18f3304197d3a93c3ad7f2335f26a8e 
+HashValue2 =c1f256b09f64c2f445e1ebbc780ab10e3c44c0ea4dc509f84c2f42ae4e0f3eb8 
+TxnID =sit20230731093035000007 
+AuthCode =sit202 
+BankRefNo =sit20230731093035000007 
+IssuingBank =HostSimS2S 
+TokenType =OCP 
+Token =e4a6jaxm8rlbgocyIdDQdg==
+RespTime =2023-08-01%2002%3A27%3A55 
+TxnStatus =0 
+TxnMessage =Transaction%20Successful 
+CardNoMask =444433XXXXXX1111 
+CardHolder =Hahahaah 
+CardType =VISA 
+CardExp =202308

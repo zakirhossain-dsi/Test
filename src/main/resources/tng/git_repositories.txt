@@ -1,7 +1,10 @@
+MLFF Projects:
+-------------
 git clone git@10.124.2.26:mlff/mlff_backend/mlff-config-service.git
 git clone git@10.124.2.26:mlff/mlff_backend/mlff-payment-notification-service.git
 git clone git@10.124.2.26:mlff/mlff_backend/mlff-txn-payment-service.git
 git clone git@10.124.2.26:mlff/mlff_backend/mlff-txn-query-service.git
+git clone git@10.124.2.26:mlff/mlff_backend/mlff-tag-status-service.git
 
 RFID Projects
 -------------
