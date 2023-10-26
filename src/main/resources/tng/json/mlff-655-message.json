@@ -1,7 +1,0 @@
-{
-  "eventName": "DISABLE_TAG_ADDED_REMINDER",
-  "recipients": "abc@gmail.com",
-  "cc": "",
-  "bcc": "",
-  "placeholders": "{\n  \"fullName\": \"Jackie\",\n  \"bodyTitle\": \"Reminder\",\n  \"summary\": \"You have vehicles with TNG RFID tags that are not enabled for MLFF. Don't forget to enable them for a smooth, seamless journey.\",\n  \"detail\": \"<tr>\\n    <td>Vehicle Number<br/>{vehicleNumber}</td>\\n    <td>TNG RFID tag<br/>{rfidTag}</td>\\n</tr>\"\n}"
-}

@@ -1,7 +1,0 @@
-{
-  "processName": "MLFF_ENABLED_SUCCESSFULLY",
-  "recipients": "abc@gmail.com,xxx@gmail.com",
-  "cc": "yyy@gmail.com,zzz@gmail.com",
-  "bcc": "sam@gmail.com",
-  "placeholders": "{\"key\":\"value\"}"
-}

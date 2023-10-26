@@ -1,2 +1,0 @@
-Service name: mlff-refunded-txn-recon-scheduler
-Scheduler: Configurable Time

@@ -1,7 +1,0 @@
-{
-  "eventName": "NEW_DISABLED_TAG_ADDED",
-  "recipients": "abc@gmail.com,xxx@gmail.com",
-  "cc": "",
-  "bcc": "",
-  "placeholders": "{\n  \"fullName\": \"Jackie\",\n  \"bodyTitle\": \"New TNG RFID tag added\",\n  \"summary\": \"Enable your vehicle’s new TNG RFID tag for MLFF to begin using it at all MLFF gantries!\",\n  \"detail\": \"<tr>\\n    <td>Vehicle Number<br/>{vehicleNumber}</td>\\n    <td>TNG RFID tag<br/>{rfidTag}</td>\\n</tr>\"\n}"
-}
